@@ -11,7 +11,8 @@ MONGODB_DATABASE = str(os.getenv("MONGODB_DATABASE"))
 MONGODB_COLLECTION = str(os.getenv("MONGODB_COLLECTION"))
 API_TOKEN = str(os.getenv("GEMINI_API_KEY"))
 
-# Initialize the RAGModel with your MongoDB and API settings
+# Initialize the RAGModel with your MongoDB and Replicate settings
+# Make sure streamlit is caching the model
 @st.cache(allow_output_mutation=True)
 def load_model():
     return RAGModel(
@@ -23,8 +24,6 @@ def load_model():
 
 # Streamlit app customization
 st.set_page_config(page_title="HubermanAI", page_icon="🔬", layout="centered", initial_sidebar_state="auto")
-
-# Custom CSS
 hide_default_format = """
        <style>
        #MainMenu {visibility: hidden; }
@@ -32,51 +31,60 @@ hide_default_format = """
        .reportview-container {
             background: #000000
        }
+       /* Center the logo */
        .logo-img {
            display: flex;
            justify-content: center;
        }
-       div.stButton > button:first-child {
-           background-color: #00b8a9;
-           color: white;
-           font-size: 18px;
-           font-weight: bold;
-       }
-       .reportview-container .main footer {visibility: hidden;}  
        </style>
        """
 st.markdown(hide_default_format, unsafe_allow_html=True)
 
-# Display the logo and title
+# Add an enter button to submit the query
+st.markdown(
+    """
+    <style>
+    div.stButton > button:first-child {
+        background-color: #00b8a9;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Add a custom footer
+footer = """
+    <style>
+    .reportview-container .main footer {visibility: hidden;}    
+    </style>
+    """
+st.markdown(footer, unsafe_allow_html=True)
+
+
+# Display logo at the center
 st.markdown("<div class='logo-img'>", unsafe_allow_html=True)
 st.image("src/.streamlit/HubermanAI.jpeg", width=200)  # Adjust the path and width as needed
 st.markdown("</div>", unsafe_allow_html=True)
 
+# Display title and description
 st.title("HubermanAI")
-st.write("HubermanAI is a conversational chat bot channeling Dr. Andrew Huberman's scientific expertise 🧠 🚀")
+st.write("HubermanAI is a conversational chat bot channeling Dr. Andrew Huberman's scientific expertise 🧠")
 
-# Initialize chat history
-if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = []
 
 # Define your query
-query = st.text_input("Message HubermanAI: ", key="query_input")
+query = st.text_input("Message HubermanAI: ")
 
+# Perform semantic search and generate an answer
 rag_model = load_model()
+# give users feedback that the model is loading
+if query:
+    st.write("HubermanAI is thinking...")
 
-# Submit query and update chat history
-def handle_query():
-    if query:  # Ensure the query is not empty
-        st.session_state.chat_history.append(f"You: {query}")
-        answer = rag_model.generate_answer(query)
-        st.session_state.chat_history.append(f"HubermanAI: {answer}")
-        st.session_state.query_input = ""  # Clear the input box after submission
+answer = rag_model.generate_answer(query)
 
-# Button to submit the query
-if st.button("Ask HubermanAI"):
-    handle_query()
+# Print the generated answer
 
-# Display chat history
-for message in st.session_state.chat_history:
-    st.text_area("", value=message, height=75, disabled=True)
-
+st.write("Generated Answer:", answer)
