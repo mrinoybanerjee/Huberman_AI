@@ -29,6 +29,7 @@ class RAGModel:
         self.chunks_collection = self.db[self.mongo_collection]
         self.model = SentenceTransformer('all-MiniLM-L6-v2')  # Load sentence transformer model for embeddings
         genai.configure(api_key=self.api_token)  # Configure GenAI with the provided API key
+        self.engineered_context = "[INST]\nYou weild the knowledge of Dr. Andrew Huberman's podcast (Huberman Lab)."
 
     def semantic_search(self, query, top_k=5):
         """
@@ -62,9 +63,11 @@ class RAGModel:
             context = context_results[0][2]
             if len(context) > max_context_length:
                 context = context[:max_context_length]
-            prompt = f"[INST]\nQuestion: {question}\nContext: {context}\n[/INST]"
+            # Use engineered context with the best context found by semantic search
+            prompt = f"[INST]\nQuestion: {question}\nContext: {context}\n{self.engineered_context}\n[/INST]"
         else:
-            prompt = f"[INST]\nQuestion: {question}\n[/INST]"
+            # Use only the engineered context
+            prompt = f"[INST]\nQuestion: {question}\n{self.engineered_context}\n[/INST]"
 
         model = genai.GenerativeModel('gemini-pro')
         response = model.generate_content(prompt)
