@@ -29,7 +29,7 @@ class RAGModel:
         self.chunks_collection = self.db[self.mongo_collection]
         self.model = SentenceTransformer('all-MiniLM-L6-v2')  # Load sentence transformer model for embeddings
         genai.configure(api_key=self.api_token)  # Configure GenAI with the provided API key
-        self.engineered_context = "[INST]\nYou weild the knowledge of Dr. Andrew Huberman."
+        self.engineered_context = "[INST]\nYou weild the knowledge of Dr. Andrew Huberman. If context does not make sense, use your knowledge to answer the question.\n[/INST]"
 
     def semantic_search(self, query, top_k=5):
         """
