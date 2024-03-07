@@ -2,6 +2,11 @@ import re
 import fitz  # PyMuPDF, used for reading PDF files
 import pymongo
 from sentence_transformers import SentenceTransformer  # For generating text embeddings
+import nltk
+from nltk.tokenize import sent_tokenize
+
+# Ensure the necessary NLTK model is downloaded
+nltk.download('punkt', quiet=True)
 
 class PreprocessPDF:
     """
@@ -56,23 +61,12 @@ class PreprocessPDF:
     
     def chunk_by_sentence(self, text):
         """
-        Splits the text into chunks based on sentence boundaries.
+        Splits the text into chunks based on sentence boundaries using NLTK's sent_tokenize.
         
         :param text: Cleaned text to be split into sentences.
         :return: A list of sentences extracted from the text.
         """
-        sentences = []
-        tmp_sentence = ""
-        for char in text:
-            if char in [".", "!", "?"]:
-                sentences.append(tmp_sentence)
-                tmp_sentence = ""
-            else:
-                tmp_sentence += char
-        # Add any remaining text as the last sentence
-        if tmp_sentence:
-            sentences.append(tmp_sentence)
-        return sentences
+        return [sentence.strip() for sentence in sent_tokenize(text)]
         
     def store_chunks_in_mongodb(self, chunks):
         """
@@ -80,8 +74,8 @@ class PreprocessPDF:
         
         :param chunks: List of text chunks (sentences) to be stored.
         """
-        for idx, chunk in enumerate(chunks):
-            document = {"_id": idx, "text": chunk}
+        for chunk in chunks:
+            document = {"text": chunk}
             self.collection.insert_one(document)
         print(f"Total chunks stored in MongoDB: {len(chunks)}")
     
@@ -94,3 +88,4 @@ class PreprocessPDF:
             embedding = self.model.encode(document['text'], convert_to_tensor=False)
             # Update the document with the generated embedding
             self.collection.update_one({'_id': document['_id']}, {'$set': {'embedding': embedding.tolist()}})
+        print("All documents updated with sentence embeddings.")
