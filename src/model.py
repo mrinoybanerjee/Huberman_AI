@@ -70,7 +70,7 @@ class RAGModel:
             # Use only the engineered context
             prompt = f"[INST]\nQuestion: {question}\n{self.engineered_context}\n[/INST]"
 
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-1.0-pro-latest')
         response = model.generate_content(prompt)
 
         # Handle the case where the response is empty
