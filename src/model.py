@@ -49,7 +49,7 @@ class RAGModel:
         return similarities[:top_k]
     
 
-    def generate_answer(self, question, max_context_length=2000):
+    def generate_answer(self, question, max_context_length=1000):
         """
         Generates an answer to a given question using the best context found by semantic search
         and the Gemini Pro model.
