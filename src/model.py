@@ -58,7 +58,7 @@ class RAGModel:
         :param max_context_length: Maximum length of the context to be considered.
         :return: Generated answer as a string.
         """
-        context_results = self.semantic_search(question, top_k=5)
+        context_results = self.semantic_search(question, top_k=3)
         if context_results:
             # Concatenate the top-k context results into a single string
             context = " ".join([result[2] for result in context_results])
