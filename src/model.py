@@ -29,7 +29,7 @@ class RAGModel:
         self.chunks_collection = self.db[self.mongo_collection]
         self.model = SentenceTransformer('all-MiniLM-L6-v2')  # Load sentence transformer model for embeddings
         genai.configure(api_key=self.api_token)  # Configure GenAI with the provided API key
-        self.engineered_context = "[INST]\nYou weild the knowledge of Dr. Andrew Huberman's podcast (Huberman Lab)."
+        self.engineered_context = "[INST]\nYou weild the knowledge of Dr. Andrew Huberman."
 
     def semantic_search(self, query, top_k=5):
         """
@@ -58,9 +58,10 @@ class RAGModel:
         :param max_context_length: Maximum length of the context to be considered.
         :return: Generated answer as a string.
         """
-        context_results = self.semantic_search(question, top_k=1)
+        context_results = self.semantic_search(question, top_k=5)
         if context_results:
-            context = context_results[0][2]
+            # Concatenate the top-k context results into a single string
+            context = " ".join([result[2] for result in context_results])
             if len(context) > max_context_length:
                 context = context[:max_context_length]
             # Use engineered context with the best context found by semantic search
