@@ -72,16 +72,16 @@ class RAGModel:
 
         replicate_client = Client(api_token=self.api_token)
         output = replicate_client.run(
-            "nwhitehead/llama2-7b-chat-gptq:8c1f632f7a9df740bfbe8f6b35e491ddfe5c43a79b43f062f719ccbe03772b52",
+            "mistralai/mixtral-8x7b-instruct-v0.1",
             input={
-                "seed": -1,
-                "top_k": 20,
-                "top_p": 1,
+                "top_k": 50,
+                "top_p": 0.9,
                 "prompt": prompt,
-                "max_tokens": 1024,
-                "min_tokens": 1,
-                "temperature": 0.5,
-                "repetition_penalty": 1
+                "temperature": 0.6,
+                "max_new_tokens": 1024,
+                "prompt_template": "<s>[INST] {prompt} [/INST] ",
+                "presence_penalty": 0,
+                "frequency_penalty": 0
             }
         )
 
