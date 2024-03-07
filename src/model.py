@@ -29,7 +29,7 @@ class RAGModel:
         self.chunks_collection = self.db[self.mongo_collection]
         self.model = SentenceTransformer('all-MiniLM-L6-v2')  # Load sentence transformer model for embeddings
         genai.configure(api_key=self.api_token)  # Configure GenAI with the provided API key
-        self.engineered_context = "[INST]\nYou weild the knowledge of Dr. Andrew Huberman. If context does not make sense, use your knowledge to answer the question.\n[/INST]"
+        self.engineered_context = "[INST]\nYou have the knowledge of Dr. Andrew Huberman."
 
     def semantic_search(self, query, top_k=5):
         """
@@ -70,14 +70,31 @@ class RAGModel:
             # Use only the engineered context
             prompt = f"[INST]\nQuestion: {question}\n{self.engineered_context}\n[/INST]"
 
-        model = genai.GenerativeModel('gemini-1.0-pro-latest')
-        response = model.generate_content(prompt)
+        replicate_client = Client(api_token=self.api_token)
+        output = replicate_client.run(
+            "nwhitehead/llama2-7b-chat-gptq:8c1f632f7a9df740bfbe8f6b35e491ddfe5c43a79b43f062f719ccbe03772b52",
+            input={
+                "seed": -1,
+                "top_k": 20,
+                "top_p": 1,
+                "prompt": prompt,
+                "max_tokens": 1024,
+                "min_tokens": 1,
+                "temperature": 0.5,
+                "repetition_penalty": 1
+            }
+        )
 
-        # Handle the case where the response is empty
-        if not response.text:
-            return "Sorry, I don't have an answer for that."
-        
-        return response.text
+        answer = ""
+        # Concatenate the output items into a single string
+        for item in output:
+            answer += item
+
+        # Handle the case where the answer is empty
+        if not answer:
+            answer = "Sorry, I don't have an answer for that."
+
+        return answer
     
 
     def generate_RAG_answer(self, question, max_context_length=500):

@@ -9,7 +9,7 @@ load_dotenv()
 MONGODB_CONNECTION_STRING = str(os.getenv("MONGODB_URI"))
 MONGODB_DATABASE = str(os.getenv("MONGODB_DATABASE"))
 MONGODB_COLLECTION = str(os.getenv("MONGODB_COLLECTION"))
-API_TOKEN = str(os.getenv("GEMINI_API_KEY"))
+API_TOKEN = str(os.getenv("REPLICATE_API_TOKEN"))
 
 # Initialize the RAGModel with your MongoDB and Replicate settings
 # Make sure streamlit is caching the model
