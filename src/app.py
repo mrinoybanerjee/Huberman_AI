@@ -70,18 +70,18 @@ st.image("src/.streamlit/HubermanAI.jpeg", width=200)  # Adjust the path and wid
 st.markdown("</div>", unsafe_allow_html=True)
 
 # Display title and description
-st.title("HubermanAI")
-st.write("HubermanAI is a conversational chat bot channeling Dr. Andrew Huberman's scientific expertise 🧠")
+st.title("LongevityAI")
+st.write("LongevityAI is a conversational chat bot channeling Dr. Andrew Huberman's and Dr. Peter Attia's longevity research 🧠")
 
 
 # Define your query
-query = st.text_input("Message HubermanAI: ")
+query = st.text_input("Message LongevityAI: ")
 
 # Perform semantic search and generate an answer
 rag_model = load_model()
 # give users feedback that the model is loading
 if query:
-    st.write("HubermanAI is thinking...")
+    st.write("LongevityAI is thinking...")
 
 answer = rag_model.generate_answer(query)
 

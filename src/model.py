@@ -29,7 +29,7 @@ class RAGModel:
         self.chunks_collection = self.db[self.mongo_collection]
         self.model = SentenceTransformer('all-MiniLM-L6-v2')  # Load sentence transformer model for embeddings
         genai.configure(api_key=self.api_token)  # Configure GenAI with the provided API key
-        self.engineered_context = "[INST]\nYou have the knowledge of the Huberman Lab Podcast."
+        self.engineered_context = "[INST]\nYou have the knowledge of the Huberman Lab Podcast and Dr. Peter Attia's longevity research."
 
     def semantic_search(self, query, top_k=5):
         """
@@ -46,6 +46,8 @@ class RAGModel:
             similarity = 1 - cosine(query_embedding, doc_embedding)
             similarities.append((document['_id'], similarity, document['text']))
         similarities.sort(key=lambda x: x[1], reverse=True)
+        # if number of words in each of the top 5 chunks is less than 50, then increase the top_k value
+        top_k = min(top_k, len(similarities))
         return similarities[:top_k]
     
 

@@ -87,7 +87,7 @@ def eval_mode():
 
 def main():
     # Welcome message
-    print("Welcome to AyurGPT! Sharing ancient ayurvedic wisdom with you. Type 1 if you want to go to chat mode or 2 if you want to activate evaluate mode.")
+    print("Welcome to LongevityAI! A conversational chat bot channeling Dr. Andrew Huberman's and Dr. Peter Attia's longevity expertise 🧠. Type 1 if you want to go to chat mode or 2 if you want to activate evaluate mode.")
 
     if input() == "1":
         chat_mode()
