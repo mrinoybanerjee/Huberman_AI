@@ -1,14 +1,14 @@
-# Longevity_AI 🔬
+# LongevityAI 🔬
 
 ## Project Overview
 
-"Longevity_AI: A Conversational Bot Channeling Dr. Andrew Huberman's and Dr. Peter Attia's Expertise"
+"LongevityAI: A Conversational Bot Channeling Dr. Andrew Huberman's and Dr. Peter Attia's Expertise"
 
-Longevity_AI is a RAG-based chatbot that distills Dr. Andrew Huberman's and Dr. Peter Attia's, into actionable advice. Designed for those looking to use science-based tools and protocols to enhance longevity, mental health, focus, and well-being.
+LongevityAI is a RAG-based chatbot that distills Dr. Andrew Huberman's and Dr. Peter Attia's, into actionable advice. Designed for those looking to use science-based tools and protocols to enhance longevity, mental health, focus, and well-being.
 
 ## Installation
 
-To get Longevity_AI up and running on your local machine, follow these steps:
+To get LongevityAI up and running on your local machine, follow these steps:
 
 1. **Clone the repository:**
 
@@ -32,14 +32,14 @@ pip install -r requirements.txt
 
 ## Configuration
 
-Before launching Longevity_AI, configure the environment variables:
+Before launching LongevityAI, configure the environment variables:
 
 1. Rename the `.env.example` file to `.env`.
 2. Fill in the necessary values in `.env`, such as API keys, database connection strings, or other configuration details specific to your environment.
 
 ## Usage
 
-To start Longevity_AI, navigate to the `src` directory and run the main script:
+To start LongevityAI, navigate to the `src` directory and run the main script:
 
 ```bash
 cd src
@@ -58,9 +58,9 @@ For support, further information, or to contribute to the project, please reach 
 
 ## Project Walkthrough
 
-### Longevity_AI: Using RAG Based LLM
+### LongevityAI: Using RAG Based LLM
 
-This section provides a step-by-step guide to integrating a Retrieval-Augmented Generation (RAG) based Large Language Model (LLM) into Longevity_AI, enhancing its ability to provide accurate and relevant science-based tools to boost longevity.
+This section provides a step-by-step guide to integrating a Retrieval-Augmented Generation (RAG) based Large Language Model (LLM) into LongevityAI, enhancing its ability to provide accurate and relevant science-based tools to boost longevity.
 
 
 #### Text Extraction from Book
