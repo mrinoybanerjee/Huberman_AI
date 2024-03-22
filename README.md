@@ -2,13 +2,13 @@
 
 ## Project Overview
 
-"Huberman_AI: A Conversational Bot Channeling Dr. Andrew Huberman's Expertise"
+"Longevity_AI: A Conversational Bot Channeling Dr. Andrew Huberman's and Dr. Peter Attia's Expertise"
 
-Huberman_AI is a RAG-based chatbot that distills Dr. Andrew Huberman's podcast, Huberman Lab into actionable advice. Designed for those looking to use science-based tools and protocols to enhance longevity, mental health, focus, and well-being.
+Longevity_AI is a RAG-based chatbot that distills Dr. Andrew Huberman's and Dr. Peter Attia's, into actionable advice. Designed for those looking to use science-based tools and protocols to enhance longevity, mental health, focus, and well-being.
 
 ## Installation
 
-To get Huberman_AI up and running on your local machine, follow these steps:
+To get Longevity_AI up and running on your local machine, follow these steps:
 
 1. **Clone the repository:**
 
@@ -32,14 +32,14 @@ pip install -r requirements.txt
 
 ## Configuration
 
-Before launching Huberman_AI, configure the environment variables:
+Before launching Longevity_AI, configure the environment variables:
 
 1. Rename the `.env.example` file to `.env`.
 2. Fill in the necessary values in `.env`, such as API keys, database connection strings, or other configuration details specific to your environment.
 
 ## Usage
 
-To start Huberman_AI, navigate to the `src` directory and run the main script:
+To start Longevity_AI, navigate to the `src` directory and run the main script:
 
 ```bash
 cd src
@@ -50,7 +50,7 @@ Follow the on-screen instructions to interact with the bot.
 
 ## Data Management
 
-The RAG is using Huberman Lab newsletters as well as transcripts directly from the podcast to use as the RAG corpus.
+The RAG is using Huberman Lab newsletters and Dr. Peter Attia's book Outlive as well as transcripts directly from the podcast to use as the RAG corpus.
 
 ## Contact
 
@@ -58,9 +58,9 @@ For support, further information, or to contribute to the project, please reach 
 
 ## Project Walkthrough
 
-### Huberman_AI: Using RAG Based LLM
+### Longevity_AI: Using RAG Based LLM
 
-This section provides a step-by-step guide to integrating a Retrieval-Augmented Generation (RAG) based Large Language Model (LLM) into Huberman_AI, enhancing its ability to provide accurate and relevant science-based tools to boost longevity.
+This section provides a step-by-step guide to integrating a Retrieval-Augmented Generation (RAG) based Large Language Model (LLM) into Longevity_AI, enhancing its ability to provide accurate and relevant science-based tools to boost longevity.
 
 
 #### Text Extraction from Book
